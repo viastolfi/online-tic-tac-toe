@@ -43,8 +43,6 @@ io.on('connection', (socket) => {
 	})
 
 	socket.on('play', (play, player) => {
-		console.log(play);
-
 		let n = 2;
 		let game = games[player.roomId - 1];
 
@@ -62,6 +60,10 @@ io.on('connection', (socket) => {
 		} else {
 			game.gameGrid[play.row][play.col] = n
 		}
+
+		let win = game.checkWin();
+		console.log(win);
+
 		game.gameLoop();
 	})
 })	

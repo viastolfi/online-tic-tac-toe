@@ -68,10 +68,5 @@ function clickPlay(event) {
 
 export function play() {
 	canvas.addEventListener('mousedown', clickPlay);
-
-	// The player click on the case he want
-	// The information is sent to the server
-	// The server change the board and inform both players
-	// Change the board visualy
 }
 

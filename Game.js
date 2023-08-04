@@ -22,27 +22,25 @@ class Game {
 
 	askForPlay() {
 		io.to(this.actualPlayer).emit('ask for play');
-		// sent play moove to actual player
-		// receive play
-		// sent draw grid instruction
-		// change actual player
 	}
 
 	gameLoop() {
+		let nextPlayer;
 		for (let i = 0; i < this.room.players.length; i++) {
 			io.to(this.room.players[i].socketId).emit('draw grid', (this.gameGrid));
 
 			if (this.actualPlayer !== this.room.players[i].socketId) {
-				this.actualPlayer = this.room.players[i].socketId;
+				nextPlayer = this.room.players[i].socketId;
 			}
 		}
+
+		this.actualPlayer = nextPlayer;
 
 		this.askForPlay();
 	}
 
 	// TODO 
 	// Check winner
-	// change player each turn
 	// rematch button + score
 }
 

@@ -54,7 +54,14 @@ io.on('connection', (socket) => {
 			n = 1;
 		}
 
-		game.gameGrid[play.row][play.col] = n
+		let placehold = game.gameGrid[play.row][play.col];
+
+		if ( placehold === 1 || placehold === 0) {
+			game.askForPlay();
+			return;
+		} else {
+			game.gameGrid[play.row][play.col] = n
+		}
 		game.gameLoop();
 	})
 })	

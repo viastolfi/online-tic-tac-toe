@@ -4,6 +4,12 @@ const ctx = canvas.getContext("2d");
 const caseSize = 200;
 let gameGrid = [3][3];
 
+gameGrid = [
+ [1, 0, 1],
+ [0, 0, 1],
+ [0, 1, 1],
+];
+
 function drawGrid() {
 	ctx.strokeStyle = "#ccc";
 	for (let x = 0; x <= 400; x += caseSize) {
@@ -11,8 +17,39 @@ function drawGrid() {
 			ctx.strokeRect(x, y, caseSize, caseSize);
 		}
 	}
-}
 
+	for (let i = 0; i < gameGrid.length; i++) {
+		let cube = gameGrid[i];
+		for (let j = 0; j < cube.length; j++) {
+			let data = cube[j];
+			if (data === 0) {
+				// draw red circle
+				ctx.strokeStyle = "#FF0000";
+
+				let x = j * 200 + 100;
+				let y = i * 200 + 100;
+
+				ctx.beginPath();
+				ctx.arc(x, y, 90, 0, 2 * Math.PI);
+				ctx.stroke();
+			} else {
+				// draw blue cross	
+				ctx.strokeStyle = "#ADD8E6";
+				
+				let x = j * 200 + 10;
+				let y = i * 200 + 10;
+
+				ctx.beginPath();
+				ctx.moveTo(x, y);
+				ctx.lineTo(x + 180, y + 180);
+				ctx.moveTo(x + 180, y);
+				ctx.lineTo(x, y + 180);
+				ctx.closePath();
+				ctx.stroke();
+			}
+		}		 
+	}
+}
 function getCursorPosition(canvas, event) {
 	const rect = canvas.getBoundingClientRect();
 	const x = event.clientX - rect.left;

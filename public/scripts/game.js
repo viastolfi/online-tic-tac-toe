@@ -5,9 +5,9 @@ const caseSize = 200;
 let gameGrid = [3][3];
 
 gameGrid = [
- [1, 0, 1],
- [0, 0, 1],
- [0, 1, 1],
+ [0, 0, 0],
+ [0, 0, 0],
+ [0, 0, 0],
 ];
 
 function drawGrid() {
@@ -50,6 +50,7 @@ function drawGrid() {
 		}		 
 	}
 }
+
 function getCursorPosition(canvas, event) {
 	const rect = canvas.getBoundingClientRect();
 	const x = event.clientX - rect.left;

@@ -1,0 +1,16 @@
+{
+  "name": "Online-tic-tac-toe",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js, nodemon server.js",
+    "start": "node app.js, node server.js"
+  },
+  "author": "Vincent ASTOLFI",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

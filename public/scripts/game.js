@@ -1,16 +1,11 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
+import { socket, player } from "./main.js";
+
 const caseSize = 200;
-let gameGrid = [3][3];
 
-gameGrid = [
- [0, 0, 0],
- [0, 0, 0],
- [0, 0, 0],
-];
-
-function drawGrid() {
+export function drawGrid(gameGrid) {
 	ctx.strokeStyle = "#ccc";
 	for (let x = 0; x <= 400; x += caseSize) {
 		for (let y = 0; y <= 400; y += caseSize) {
@@ -32,7 +27,7 @@ function drawGrid() {
 				ctx.beginPath();
 				ctx.arc(x, y, 90, 0, 2 * Math.PI);
 				ctx.stroke();
-			} else {
+			} else if (data === 1) {
 				// draw blue cross	
 				ctx.strokeStyle = "#ADD8E6";
 				
@@ -62,9 +57,21 @@ function getCursorPosition(canvas, event) {
 	return {"col": col, "row": row};
 }
 
-canvas.addEventListener('mousedown', function(e) {
-	let play = getCursorPosition(canvas, e);
+function clickPlay(event) {
+	let play = getCursorPosition(canvas, event);
 	console.log(play);
-})
 
-drawGrid();
+	canvas.removeEventListener('mousedown', clickPlay);
+
+	socket.emit('play', (play), (player));
+}
+
+export function play() {
+	canvas.addEventListener('mousedown', clickPlay);
+
+	// The player click on the case he want
+	// The information is sent to the server
+	// The server change the board and inform both players
+	// Change the board visualy
+}
+

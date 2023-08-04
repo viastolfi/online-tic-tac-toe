@@ -1,7 +1,9 @@
 import Player from "./Player.js";
 
-const socket = io();
-let player;
+import { play, drawGrid } from "./game.js";
+
+export const socket = io();
+export let player;
 
 socket.emit('get rooms', (response) => {
 	let html = "";
@@ -50,8 +52,24 @@ function joinRoom() {
 	socket.emit('join room', (player));
 }
 
-socket.on('test', (player) => {
-	console.log(player);
+socket.on('start game', (board) => {
+	const game = document.querySelector("#game");
+	const form = document.querySelector("#form");
+	const roomsCard = document.querySelector("#rooms-card");
+
+	game.classList.remove("hidden-element");
+	form.classList.add("hidden-element");
+	roomsCard.classList.add("hidden-element");
+
+	drawGrid(board);	
+})
+
+socket.on('ask for play', () => {
+	play();
+})
+
+socket.on('draw grid', (board) => {
+	drawGrid(board);
 })
 
 document.querySelector('#form').addEventListener('submit',onCreateRoom);

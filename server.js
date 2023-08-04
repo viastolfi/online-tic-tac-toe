@@ -1,7 +1,9 @@
 const { io } = require(`${__dirname}/app.js`);
 const { Room } = require(`${__dirname}/Room.js`);
+const { Game } = require(`${__dirname}/Game.js`);
 
 let roomArray = [];
+let games = [];
 
 io.on('connection', (socket) => {
     console.log('New person connected');
@@ -14,6 +16,7 @@ io.on('connection', (socket) => {
 
 	socket.on('room creation', (player, callback) => {
 		let room = new Room();
+		player.roomId = room.id;
 		room.addPlayer(player);
 
 		roomArray.push(room);
@@ -28,13 +31,31 @@ io.on('connection', (socket) => {
 			if (roomArray[i].id == player.roomId) {
 				roomArray[i].addPlayer(player);
 
-				console.log(roomArray[i]);
+				// just an example to how i sent data to a specific player
+				// let firstPlayerSocket = roomArray[i].players[0].socketId;
+				// io.to(firstPlayerSocket).emit('test', (player));
 
-				let firstPlayerSocket = roomArray[i].players[0].socketId;
-				console.log(firstPlayerSocket);
-
-				io.to(firstPlayerSocket).emit('test', (player));
+				let game = new Game(roomArray[i]);
+				games.push(game);
+				game.startGame();
 			}
 		}
 	})
+
+	socket.on('play', (play, player) => {
+		console.log(play);
+
+		let n = 2;
+		let game = games[player.roomId - 1];
+
+		if (player.isHost) {
+			n = 0;
+		} else {
+			n = 1;
+		}
+
+		game.gameGrid[play.row][play.col] = n
+		game.gameLoop();
+	})
 })	
+

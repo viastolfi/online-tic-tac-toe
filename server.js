@@ -71,5 +71,21 @@ io.on('connection', (socket) => {
 
 		game.gameLoop();
 	})
+
+	socket.on('ask for rematch', (player) => {
+		let game;
+
+		for (let i = 0; i < games.length; i++) {
+			if (games[i].room.id == player.roomId) {
+				game = games[i];
+			}
+		}
+
+		game.rematch += 1;
+
+		if (game.rematch === 2) {
+			game.restart();
+		}
+	})
 })	
 

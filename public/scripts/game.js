@@ -69,3 +69,19 @@ export function play() {
 	canvas.addEventListener('mousedown', clickPlay);
 }
 
+export function clearCanva() {
+	ctx.clearRect(0, 0, 600, 600);
+}
+
+const rematch = function(event) {
+	event.preventDefault();
+
+	socket.emit('ask for rematch', (player));
+	// sent the rematch information to the server
+	// While waiting for other player : waiting screen
+	// Close the pop up window
+	// reset the grid
+	// restart the game
+}
+
+document.querySelector('#rematch-button').addEventListener('click', rematch);

@@ -9,6 +9,7 @@ class Game {
 						[2, 2, 2],
 						];
 		this.actualPlayer = "";
+		this.rematch = 0;
 	}
 
 	startGame() {
@@ -77,6 +78,22 @@ class Game {
 		for (let i = 0; i < this.room.players.length; i++) {
 			io.to(this.room.players[i].socketId).emit('game result', (result));
 		}
+	}
+
+	restart() {
+		this.rematch = 0;
+		
+		for (let i = 0; i < 3; i++) {
+			for (let j = 0; j < 3; j++) {
+				this.gameGrid[i][j] = 2;
+			}
+		}
+
+		for (let i = 0; i < this.room.players.length; i++) {
+			io.to(this.room.players[i].socketId).emit('close pop up');
+		}
+
+		this.startGame();
 	}
 
 	// TODO 

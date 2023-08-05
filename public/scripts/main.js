@@ -1,5 +1,5 @@
 import Player from "./Player.js";
-import { play, drawGrid } from "./game.js";
+import { play, drawGrid, clearCanva } from "./game.js";
 
 export const socket = io();
 export let player;
@@ -88,6 +88,13 @@ socket.on('game result', (result) => {
 
 	// call rematch
 	// save score 
+})
+
+socket.on('close pop up', () => {
+	let modal = document.querySelector('#modal');
+
+	modal.close();
+	clearCanva();
 })
 
 document.querySelector('#form').addEventListener('submit',onCreateRoom);

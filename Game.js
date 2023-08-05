@@ -46,7 +46,18 @@ class Game {
 			if (cube[0] === cube[1] && cube[1] === cube[2] && cube[0] !== 2) {
 				return {"win": true, "winner": this.actualPlayer};
 			}
+			if (this.gameGrid[0][i] === this.gameGrid[1][i] && this.gameGrid[1][i] === this.gameGrid[2][i] && this.gameGrid[0][i] !== 2) {
+				return {"win": true, "winner": this.actualPlayer};
+			}
 		};
+
+		if (this.gameGrid[0][0] === this.gameGrid[1][1] && this.gameGrid[1][1] === this.gameGrid[2][2] && this.gameGrid[2][2] !== 2) {
+			return {"win":true, "winner": this.actualPlayer};
+		}
+
+		if (this.gameGrid[0][2] === this.gameGrid[1][1] && this.gameGrid[1][1] === this.gameGrid[2][0] && this.gameGrid[2][0] !== 2) {
+			return {"win":true, "winner": this.actualPlayer};
+		}
 
 		if (!checkVal(this.gameGrid, 2)) {
 			// case use when there is a tie

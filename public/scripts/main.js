@@ -1,5 +1,4 @@
 import Player from "./Player.js";
-
 import { play, drawGrid } from "./game.js";
 
 export const socket = io();
@@ -70,6 +69,25 @@ socket.on('ask for play', () => {
 
 socket.on('draw grid', (board) => {
 	drawGrid(board);
+})
+
+socket.on('game result', (result) => {
+	let modal = document.querySelector('#modal');
+	let text = document.querySelector('#text');
+
+	if (player.socketId === result.winner) {
+		text.innerHTML = "You Win !";
+		modal.showModal();
+	} else if (result.winner === "tie") {
+		text.innerHTML = "Tie !";
+		modal.showModal();
+	} else {
+		text.innerHTML = "You loose !";
+		modal.showModal();
+	}
+
+	// call rematch
+	// save score 
 })
 
 document.querySelector('#form').addEventListener('submit',onCreateRoom);

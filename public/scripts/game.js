@@ -59,7 +59,6 @@ function getCursorPosition(canvas, event) {
 
 function clickPlay(event) {
 	let play = getCursorPosition(canvas, event);
-	console.log(play);
 
 	canvas.removeEventListener('mousedown', clickPlay);
 

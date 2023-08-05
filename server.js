@@ -61,8 +61,13 @@ io.on('connection', (socket) => {
 			game.gameGrid[play.row][play.col] = n
 		}
 
-		let win = game.checkWin();
-		console.log(win);
+		let result = game.checkWin();
+
+		if (result.win === true) {
+			game.sentResult(result);
+			game.drawGrid();
+			return;
+		}	
 
 		game.gameLoop();
 	})

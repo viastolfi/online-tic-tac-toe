@@ -26,9 +26,8 @@ class Game {
 
 	gameLoop() {
 		let nextPlayer;
+		this.drawGrid();
 		for (let i = 0; i < this.room.players.length; i++) {
-			io.to(this.room.players[i].socketId).emit('draw grid', (this.gameGrid));
-
 			if (this.actualPlayer !== this.room.players[i].socketId) {
 				nextPlayer = this.room.players[i].socketId;
 			}
@@ -38,6 +37,12 @@ class Game {
 
 		this.askForPlay();
 	}
+
+	drawGrid() {
+		for (let i = 0; i < this.room.players.length; i++) {
+			io.to(this.room.players[i].socketId).emit('draw grid', (this.gameGrid));
+		}
+}
 
 	checkWin() {
 		// check through every rows 
@@ -68,8 +73,13 @@ class Game {
 		return {"win":false, "winner": ""};
 	}
 
+	sentResult(result) {
+		for (let i = 0; i < this.room.players.length; i++) {
+			io.to(this.room.players[i].socketId).emit('game result', (result));
+		}
+	}
+
 	// TODO 
-	// Check winner
 	// rematch button + score
 }
 
